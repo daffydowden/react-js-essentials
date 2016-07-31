@@ -53,7 +53,8 @@ var Application = React.createClass({
 
                     </div>
                 </div>
-               ) 
+            </div>
+        ) 
     }
 });
 

@@ -84,7 +84,7 @@ var StreamTweet = React.createClass({
         console.log('[Snapterest] StreamTweet: 7. Running componentDidUpdate()');
 
         window.snapterest.numberOfDisplayedTweets++;
-    }
+    },
 
     componentWillUnmount: function() {
         console.log('[Snapterest] StreamTweet: 8. Running componentWillUnMount()') ;
