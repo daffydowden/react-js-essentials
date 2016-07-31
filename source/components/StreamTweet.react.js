@@ -37,6 +37,55 @@ var StreamTweet = React.createClass({
         window.snapterest.tweetHtml  = componentDOMRepresentation.children[1].outerHTML;
     },
 
+    // invoked on component updating phase when component receives new properties from 
+    // parent component
+    componentWillReceiveProps: function(nextProps) {
+        console.log('[Snapterest] StreamTweet: 4. Running componentWillReceiveProps()'); 
+
+        var currentTweetLength = this.props.tweet.text.length;
+        var nextTweetLength = nextProps.tweet.text.length;
+        var isNumberOfCharactersIncreasing = (nextTweetLength > currentTweetLength);
+        var headerText;
+
+        this.setState({
+            numberOfCharactersIsIncreasing: isNumberOfCharactersIncreasing
+        });
+
+        if (isNumberOfCharactersIncreasing) {
+            headerText = 'Number of characters is increasing';
+        } else {
+            headerText = 'Latest public photo from Twitter';
+        }
+
+        // even tho this is called twice it will not trigger render
+        // React internally optimizes this into batches of state updates
+        this.setState({
+            headerText: headerText
+        });
+        
+        window.snapterest.numberOfReceivedTweets++;
+    },
+
+    // Should next component state trigger rerendering?
+    shouldComponentUpdate: function(nextProps, nextState) {
+        console.log('[Snapterest] StreamTweet: 5. Running shouldComponentUpdate()');
+
+        return (nextProps.tweet.text.length > 1);
+    },
+
+    // called immediately before render
+    componentWillUpdate: function(nextProps, nextState) {
+        console.log('[Snapterest] StreamTweet: 6. Running componentWillUpdate()');
+    },
+
+    // called immediately after render
+    // useful for post-render operations
+    componentDidUpdate: function(prevProps, prevState) {
+        console.log('[Snapterest] StreamTweet: 7. Running componentDidUpdate()');
+
+        window.snapterest.numberOfDisplayedTweets++;
+    }
+
     componentWillUnmount: function() {
         console.log('[Snapterest] StreamTweet: 8. Running componentWillUnMount()') ;
 
